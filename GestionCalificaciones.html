@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Calificaciones</title>
+    <link rel="stylesheet" href="/css.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🏫 Sistema de Calificaciones</h1>
+            <nav>
+                <a href="/calificaciones" class="btn">📝 Calificaciones</a>
+                <a href="/reportes" class="btn">📊 Reportes</a>
+                <a href="/cerrar_sesion" class="btn btn-danger">🚪 Cerrar Sesión</a>
+            </nav>
+        </header>
+
+        <main>
+            <section class="form-section">
+                <h2>Agregar Nuevas Calificaciones</h2>
+                <form action="/agregar" method="POST" class="student-form">
+                    <input type="text" name="nombre_alumno" placeholder="Nombre del Alumno" required>
+                    <input type="text" name="apellidos_alumno" placeholder="Apellidos del Alumno" required>
+                    <select name="grupo" required>
+                        <option value="">Selecciona grupo</option>
+                        <option value="1°A">1°A</option>
+                        <option value="1°B">1°B</option>
+                        <option value="1°C">1°C</option>
+                    </select>
+                    <select name="ciclo_escolar" required>
+                        <option value="">Selecciona ciclo</option>
+                        <option value="2024-2025">2024-2025</option>
+                        <option value="2025-2026">2025-2026</option>
+                    </select>
+                    
+                    <h3 style="grid-column: 1 / -1; margin-top: 1rem;">Calificaciones (0-10)</h3>
+                    
+                    <input type="number" name="matematicas" placeholder="Matemáticas" min="0" max="10" step="0.1" required>
+                    <input type="number" name="espanol" placeholder="Español" min="0" max="10" step="0.1" required>
+                    <input type="number" name="ingles" placeholder="Inglés" min="0" max="10" step="0.1" required>
+                    <input type="number" name="ciencias" placeholder="Ciencias Naturales" min="0" max="10" step="0.1" required>
+                    <input type="number" name="formacion" placeholder="Formación Cívica y Ética" min="0" max="10" step="0.1" required>
+                    
+                    <button type="submit" class="btn btn-primary" style="grid-column: 1 / -1;">📊 Registrar Calificaciones</button>
+                </form>
+            </section>
+
+            <section class="list-section">
+                <h2>Calificaciones Registradas (Total: {{total}})</h2>
+                <div class="students-list">
+                    {{calificaciones}}
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Modal para modificar calificaciones -->
+    <div id="modalModificar" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>✏️ Modificar Calificaciones</h2>
+                <span class="close">&times;</span>
+            </div>
+            <form id="formModificar" method="POST" class="student-form">
+                <input type="hidden" id="calificacion_id" name="calificacion_id">
+                <input type="text" id="modal_nombre" name="nombre_alumno" placeholder="Nombre" required>
+                <input type="text" id="modal_apellidos" name="apellidos_alumno" placeholder="Apellidos" required>
+                <select id="modal_grupo" name="grupo" required>
+                    <option value="">Selecciona grupo</option>
+                    <option value="1°A">1°A</option>
+                    <option value="1°B">1°B</option>
+                    <option value="1°C">1°C</option>
+                </select>
+                <select id="modal_ciclo" name="ciclo_escolar" required>
+                    <option value="">Selecciona ciclo</option>
+                    <option value="2024-2025">2024-2025</option>
+                    <option value="2025-2026">2025-2026</option>
+                </select>
+                
+                <h3 style="grid-column: 1 / -1;">Calificaciones (0-10)</h3>
+                
+                <input type="number" id="modal_matematicas" name="matematicas" placeholder="Matemáticas" min="0" max="10" step="0.1" required>
+                <input type="number" id="modal_espanol" name="espanol" placeholder="Español" min="0" max="10" step="0.1" required>
+                <input type="number" id="modal_ingles" name="ingles" placeholder="Inglés" min="0" max="10" step="0.1" required>
+                <input type="number" id="modal_ciencias" name="ciencias" placeholder="Ciencias" min="0" max="10" step="0.1" required>
+                <input type="number" id="modal_formacion" name="formacion" placeholder="Formación Cívica" min="0" max="10" step="0.1" required>
+                
+                <div class="modal-actions">
+                    <button type="button" class="btn btn-secondary" onclick="cerrarModal()">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Obtener el modal
+        const modal = document.getElementById("modalModificar");
+        const closeBtn = document.querySelector(".close");
+
+        // Función para abrir el modal y cargar datos
+        function abrirModal(id, nombre, apellidos, grupo, ciclo, matematicas, espanol, ingles, ciencias, formacion) {
+            document.getElementById("calificacion_id").value = id;
+            document.getElementById("modal_nombre").value = nombre;
+            document.getElementById("modal_apellidos").value = apellidos;
+            document.getElementById("modal_grupo").value = grupo;
+            document.getElementById("modal_ciclo").value = ciclo;
+            document.getElementById("modal_matematicas").value = matematicas;
+            document.getElementById("modal_espanol").value = espanol;
+            document.getElementById("modal_ingles").value = ingles;
+            document.getElementById("modal_ciencias").value = ciencias;
+            document.getElementById("modal_formacion").value = formacion;
+            
+            // Actualizar el action del formulario
+            document.getElementById("formModificar").action = `/modificar/${id}`;
+            
+            modal.style.display = "block";
+        }
+
+        // Función para cerrar el modal
+        function cerrarModal() {
+            modal.style.display = "none";
+        }
+
+        // Cerrar modal al hacer clic en la X
+        closeBtn.onclick = cerrarModal;
+
+        // Cerrar modal al hacer clic fuera del contenido
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                cerrarModal();
+            }
+        }
+
+        // Cerrar modal con tecla ESC
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                cerrarModal();
+            }
+        });
+    </script>
+</body>
+</html>

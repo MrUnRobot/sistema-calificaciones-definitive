@@ -1,0 +1,207 @@
+// Conectar a MongoDB
+mongosh
+
+// Usar base de datos de calificaciones
+use sistema_calificaciones
+
+// Eliminar colecciones existentes si las hay
+db.maestros.drop()
+db.calificaciones.drop()
+
+// Crear colección de maestros con contraseñas fáciles
+// REEMPLAZA EL HASH_DEL_ADMIN con el hash que generaste
+db.maestros.insertMany([
+  {
+    "_id": 1,
+    "usuario": "admin",
+    "password": "$2b$12$8uUTb8OVrY9YGMiPlbAtDeNyIp6tDKedS7xo71ux0MB/oRfq8qeza", // Reemplaza con el hash generado
+    "nombre": "Administrador del Sistema",
+    "grupo": "Todos",
+    "grado": "Admin",
+    "rol": "admin",
+    "activo": true
+  },
+  {
+    "_id": 2,
+    "usuario": "m1a",
+    "password": "1234",
+    "nombre": "Maestro 1°A",
+    "grupo": "1°A",
+    "grado": "1",
+    "rol": "maestro",
+    "activo": true
+  },
+  {
+    "_id": 3,
+    "usuario": "m1b", 
+    "password": "1234",
+    "nombre": "Maestro 1°B",
+    "grupo": "1°B",
+    "grado": "1",
+    "rol": "maestro",
+    "activo": true
+  },
+  {
+    "_id": 4,
+    "usuario": "m1c",
+    "password": "1234",
+    "nombre": "Maestro 1°C",
+    "grupo": "1°C",
+    "grado": "1",
+    "rol": "maestro",
+    "activo": true
+  },
+  {
+    "_id": 5,
+    "usuario": "m2a",
+    "password": "1234",
+    "nombre": "Maestro 2°A",
+    "grupo": "2°A",
+    "grado": "2",
+    "rol": "maestro",
+    "activo": true
+  },
+  {
+    "_id": 6,
+    "usuario": "m2b",
+    "password": "1234",
+    "nombre": "Maestro 2°B",
+    "grupo": "2°B",
+    "grado": "2",
+    "rol": "maestro",
+    "activo": true
+  },
+  {
+    "_id": 7,
+    "usuario": "m2c",
+    "password": "1234",
+    "nombre": "Maestro 2°C",
+    "grupo": "2°C",
+    "grado": "2",
+    "rol": "maestro",
+    "activo": true
+  },
+  {
+    "_id": 8,
+    "usuario": "m3a",
+    "password": "1234",
+    "nombre": "Maestro 3°A",
+    "grupo": "3°A",
+    "grado": "3",
+    "rol": "maestro",
+    "activo": true
+  },
+  {
+    "_id": 9,
+    "usuario": "m3b",
+    "password": "1234",
+    "nombre": "Maestro 3°B",
+    "grupo": "3°B",
+    "grado": "3",
+    "rol": "maestro",
+    "activo": true
+  },
+  {
+    "_id": 10,
+    "usuario": "m3c",
+    "password": "1234",
+    "nombre": "Maestro 3°C",
+    "grupo": "3°C",
+    "grado": "3",
+    "rol": "maestro",
+    "activo": true
+  },
+  {
+    "_id": 11,
+    "usuario": "m4a",
+    "password": "1234",
+    "nombre": "Maestro 4°A",
+    "grupo": "4°A",
+    "grado": "4",
+    "rol": "maestro",
+    "activo": true
+  },
+  {
+    "_id": 12,
+    "usuario": "m4b",
+    "password": "1234",
+    "nombre": "Maestro 4°B",
+    "grupo": "4°B",
+    "grado": "4",
+    "rol": "maestro",
+    "activo": true
+  },
+  {
+    "_id": 13,
+    "usuario": "m4c",
+    "password": "1234",
+    "nombre": "Maestro 4°C",
+    "grupo": "4°C",
+    "grado": "4",
+    "rol": "maestro",
+    "activo": true
+  },
+  {
+    "_id": 14,
+    "usuario": "m5a",
+    "password": "1234",
+    "nombre": "Maestro 5°A",
+    "grupo": "5°A",
+    "grado": "5",
+    "rol": "maestro",
+    "activo": true
+  },
+  {
+    "_id": 15,
+    "usuario": "m5b",
+    "password": "1234",
+    "nombre": "Maestro 5°B",
+    "grupo": "5°B",
+    "grado": "5",
+    "rol": "maestro",
+    "activo": true
+  },
+  {
+    "_id": 16,
+    "usuario": "m5c",
+    "password": "1234",
+    "nombre": "Maestro 5°C",
+    "grupo": "5°C",
+    "grado": "5",
+    "rol": "maestro",
+    "activo": true
+  },
+  {
+    "_id": 17,
+    "usuario": "m6a",
+    "password": "1234",
+    "nombre": "Maestro 6°A",
+    "grupo": "6°A",
+    "grado": "6",
+    "rol": "maestro",
+    "activo": true
+  },
+  {
+    "_id": 18,
+    "usuario": "m6b",
+    "password": "1234",
+    "nombre": "Maestro 6°B",
+    "grupo": "6°B",
+    "grado": "6",
+    "rol": "maestro",
+    "activo": true
+  },
+  {
+    "_id": 19,
+    "usuario": "m6c",
+    "password": "1234",
+    "nombre": "Maestro 6°C",
+    "grupo": "6°C",
+    "grado": "6",
+    "rol": "maestro",
+    "activo": true
+  }
+])
+
+// Verificar que se crearon correctamente
+db.maestros.find().sort({_id: 1})
