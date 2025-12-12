@@ -1,3 +1,5 @@
 # nixpacks.toml
 [phases.setup]
+# Request pip as a separate, explicit system package
+nixPkgs = ["python39", "python39Packages.pip", "gcc"]
 cmds = ["python3 -m pip install --upgrade pip"]
