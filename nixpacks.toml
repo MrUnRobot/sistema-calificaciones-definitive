@@ -1,5 +1,18 @@
 # nixpacks.toml
 [phases.setup]
-# Request pip as a separate, explicit system package
-nixPkgs = ["python39", "python39Packages.pip", "gcc"]
-cmds = ["python3 -m pip install --upgrade pip"]
+# 'python3' and 'pip' are installed as standalone, linked commands
+nixPkgs = ["python3", "python3Packages.pip", "gcc"]
+cmds = [
+    # Use the standalone 'pip' command to upgrade itself
+    "pip install --upgrade pip",
+    # Optional: If you want to use 'python3 -m pip' later, ensure pip is available to it
+    "python3 -m ensurepip --upgrade"
+]
+
+[phases.install]
+# The default install phase creates a virtual environment.
+# We must ensure it uses the correct 'python3' and 'pip' we just set up.
+cmds = [
+    "python3 -m venv --copies /opt/venv",
+    ". /opt/venv/bin/activate && pip install -r requirements.txt"
+]
