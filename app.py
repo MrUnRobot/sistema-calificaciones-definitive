@@ -5,7 +5,7 @@ import os
 import bcrypt
 
 app = Flask(__name__, template_folder='.', static_folder='static')
-app.secret_key = 'clave_secreta_para_sesiones'
+app.secret_key = os.environ.get('FLASK_SECRET_KEY', 'Kaliuserfr_2024_Escuela_20Nov_Sistema_Calif!@#$%^&*()')
 
 # RUTA ESTÁTICA PARA SERVIR ARCHIVOS CSS, JS, IMÁGENES, ETC.
 @app.route('/static/<path:filename>')
@@ -1154,4 +1154,5 @@ if __name__ == '__main__':
     print("👤 Admin: admin | Contraseña: AdminSeguro2025!")
     print("👨‍🏫 Maestro 1°A: m1a | Contraseña: 1234")
     
+
     app.run(debug=True, host='0.0.0.0', port=port)
