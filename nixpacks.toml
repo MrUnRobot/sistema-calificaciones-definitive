@@ -1,18 +1,19 @@
 # nixpacks.toml
 [phases.setup]
-# 'python3' and 'pip' are installed as standalone, linked commands
-nixPkgs = ["python3", "python3Packages.pip", "gcc"]
-cmds = [
-    # Use the standalone 'pip' command to upgrade itself
-    "pip install --upgrade pip",
-    # Optional: If you want to use 'python3 -m pip' later, ensure pip is available to it
-    "python3 -m ensurepip --upgrade"
-]
+# Solo instalamos las dependencias del sistema. Pip ya viene incluido.
+nixPkgs = ["python3", "gcc"]
+
+# ELIMINAMOS TODOS los comandos 'pip install' aquí.
+# No necesitamos modificar el sistema global.
 
 [phases.install]
-# The default install phase creates a virtual environment.
-# We must ensure it uses the correct 'python3' and 'pip' we just set up.
+# Esta fase crea un entorno virtual aislado y usa pip AHÍ.
 cmds = [
     "python3 -m venv --copies /opt/venv",
+    ". /opt/venv/bin/activate && pip install --upgrade pip",
     ". /opt/venv/bin/activate && pip install -r requirements.txt"
 ]
+
+[phases.start]
+# Asegurémonos de activar el entorno virtual al iniciar
+cmd = ". /opt/venv/bin/activate && gunicorn app:app --bind=0.0.0.0:$PORT"
